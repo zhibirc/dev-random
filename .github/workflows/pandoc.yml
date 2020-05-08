@@ -10,10 +10,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+
       - run: echo "::set-env name=FILELIST::$(printf '"%s" ' bits/*.md)"
 
       - name: Pandoc Build
-      - uses: maxheld83/pandoc-action@v2
+        uses: maxheld83/pandoc-action@v2
         with:
           args: --output=index.html ${{ env.FILELIST }}
 
