@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="co">// preset</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">const</span> COUNT       <span class="op">=</span> <span class="fl">1e6</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">const</span> BOUND_UPPER <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">const</span> BOUND_LOWER <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">const</span> emitRandom <span class="op">=</span> () <span class="kw">=&gt;</span> (BOUND_LOWER <span class="op">+</span> <span class="va">Math</span>.<span class="at">random</span>() <span class="op">*</span> (BOUND_UPPER <span class="op">-</span> BOUND_LOWER <span class="op">+</span> <span class="dv">1</span>)) <span class="op">|</span> <span class="dv">0</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">const</span> vector <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">let</span> _vector<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">let</span> start<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Program starts.&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-14" title="14"></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> COUNT<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) <span class="va">vector</span>.<span class="at">push</span>(<span class="at">emitRandom</span>())<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-16" title="16">_vector <span class="op">=</span> [...<span class="at">vector</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-17" title="17"></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="va">console</span>.<span class="at">log</span>(<span class="vs">`Array of </span><span class="sc">${</span>COUNT<span class="sc">}</span><span class="vs"> random integers is generated.`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-19" title="19"></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="co">/**** native Array.prototype.sort ****/</span></a>
+<a class="sourceLine" id="cb1-21" title="21"></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Test native browser realization of Array.prototype.sort.&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-23" title="23"></a>
+<a class="sourceLine" id="cb1-24" title="24">start <span class="op">=</span> <span class="va">Date</span>.<span class="at">now</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-25" title="25"></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="va">_vector</span>.<span class="at">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">-</span> b)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-27" title="27"></a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Time to sort with Array.prototype.sort: &#39;</span><span class="op">,</span> <span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> start)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-29" title="29"></a>
+<a class="sourceLine" id="cb1-30" title="30">_vector <span class="op">=</span> [...<span class="at">vector</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-31" title="31"></a>
+<a class="sourceLine" id="cb1-32" title="32"><span class="co">/**** Counting sort ****/</span></a>
+<a class="sourceLine" id="cb1-33" title="33"></a>
+<a class="sourceLine" id="cb1-34" title="34"><span class="co">// counting sort (use element &quot;properties&quot;)</span></a>
+<a class="sourceLine" id="cb1-35" title="35"><span class="co">// each element is in range 0..1000 inclusively</span></a>
+<a class="sourceLine" id="cb1-36" title="36"></a>
+<a class="sourceLine" id="cb1-37" title="37">start <span class="op">=</span> <span class="va">Date</span>.<span class="at">now</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-38" title="38"></a>
+<a class="sourceLine" id="cb1-39" title="39"><span class="kw">const</span> tmpVector <span class="op">=</span> <span class="at">Array</span>(COUNT).<span class="at">fill</span>(<span class="dv">0</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-40" title="40"></a>
+<a class="sourceLine" id="cb1-41" title="41"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> COUNT<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) tmpVector[_vector[index]] <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-42" title="42"></a>
+<a class="sourceLine" id="cb1-43" title="43"><span class="kw">let</span> _index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-44" title="44"></a>
+<a class="sourceLine" id="cb1-45" title="45"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> COUNT<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-46" title="46">    <span class="cf">for</span> ( <span class="kw">let</span> subIndex <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> subIndex <span class="op">&lt;</span> tmpVector[index]<span class="op">;</span> subIndex <span class="op">+=</span> <span class="dv">1</span> ) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-47" title="47">        _vector[_index] <span class="op">=</span> index<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-48" title="48">        _index <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-49" title="49">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb1-50" title="50"><span class="op">}</span></a>
+<a class="sourceLine" id="cb1-51" title="51"></a>
+<a class="sourceLine" id="cb1-52" title="52"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Time to sort with Counting sort: &#39;</span><span class="op">,</span> <span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> start)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-53" title="53"></a>
+<a class="sourceLine" id="cb1-54" title="54"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Program ends.&#39;</span>)<span class="op">;</span></a></code></pre></div>
