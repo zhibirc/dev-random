@@ -1,16 +1,9 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Pandoc Document Converter
 
-uses: maxheld83/pandoc-action@v2
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   convert_via_pandoc:
         runs-on: ubuntu-18.04
@@ -18,7 +11,7 @@ jobs:
             - run: echo "foo" > input.txt  # create an example file
             - uses: docker://pandoc/core:2.9
               with:
-                  args: |>  # allows you to break string into multiple lines
+                  args:
                       --standalone
                       --output=index.html
                       input.txt
