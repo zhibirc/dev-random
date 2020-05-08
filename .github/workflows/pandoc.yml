@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run:
+          echo "::set-env name=FILELIST::$(printf '"%s" ' bits/*.md)"  
       - uses: maxheld83/pandoc-action@v2
         with:
-          args: "-s bits/*.md -o index.html"
+          args: --output=index.html ${{ env.FILELIST }}
