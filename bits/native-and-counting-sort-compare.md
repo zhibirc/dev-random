@@ -1,3 +1,6 @@
+## Native browser Array.prototype.sort vs Counting sort implementation
+### [2020-05-07]
+
 ```js
 // preset
 const COUNT       = 1e6;
@@ -54,3 +57,7 @@ console.log('Time to sort with Counting sort: ', Date.now() - start);
 
 console.log('Program ends.');
 ```
+
+#### Results
+
+
