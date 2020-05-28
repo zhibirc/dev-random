@@ -82,6 +82,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <body>
 <h2 id="native-browser-array.prototype.sort-vs-counting-sort-implementation">Native browser Array.prototype.sort vs Counting sort implementation</h2>
 <h3 id="section">[2020-05-07]</h3>
+<p>History begins when I was interest which algorithm the native browser <code>sort</code> function uses. My short research shown that standard sorting algorithm is quite efficient, but is different among different browsers: some implement <em>Merge sort</em>, some implement <em>Quicksort</em> (“Tony Hoare’s sort”), it’s often to analyze input sequences before create a decision what algorithm should be appropriate in particular case (adaptive approach).</p>
+<p>After this I had one question – is it possible to sort more quickly? Even if we are talking about a subset of all possible input sequences.</p>
+<p>Then I made the assumption that <em>Counting sort</em> could be such an algorithm. And, it seems, it’s true, at least at current time. See implementation and evaluation statistics:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="co">// preset</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">const</span> COUNT       <span class="op">=</span> <span class="fl">1e6</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw">const</span> BOUND_UPPER <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></a>
@@ -137,12 +140,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb1-53" title="53"></a>
 <a class="sourceLine" id="cb1-54" title="54"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Program ends.&#39;</span>)<span class="op">;</span></a></code></pre></div>
 <h4 id="results">Results</h4>
-<link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css">
+<table>
+<thead>
+<tr class="header">
+<th>BROWSER</th>
+<th>TIME</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Chromium (83.0.4103.61)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Firefox (76.0.1 64-bit)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css"> <link class="codestyle" rel="stylesheet" href="theme-railscasts.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
-<!-- and it's easy to individually load additional languages -->
-<script charset="UTF-8"
-        src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/go.min.js"></script>
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/go.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
