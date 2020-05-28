@@ -78,15 +78,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
-
-    <link rel="stylesheet"
-          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
-    <!-- and it's easy to individually load additional languages -->
-    <script charset="UTF-8"
-            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/go.min.js"></script>
 </head>
 <body>
+<h2 id="native-browser-array.prototype.sort-vs-counting-sort-implementation">Native browser Array.prototype.sort vs Counting sort implementation</h2>
+<h3 id="section">[2020-05-07]</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="co">// preset</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">const</span> COUNT       <span class="op">=</span> <span class="fl">1e6</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw">const</span> BOUND_UPPER <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></a>
@@ -141,5 +136,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb1-52" title="52"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Time to sort with Counting sort: &#39;</span><span class="op">,</span> <span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> start)<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-53" title="53"></a>
 <a class="sourceLine" id="cb1-54" title="54"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Program ends.&#39;</span>)<span class="op">;</span></a></code></pre></div>
+<h4 id="results">Results</h4>
 </body>
 </html>
