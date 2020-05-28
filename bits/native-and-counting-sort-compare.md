@@ -1,5 +1,13 @@
 ## Native browser Array.prototype.sort vs Counting sort implementation
+
 ### [2020-05-07]
+
+History begins when I was interest which algorithm the native browser `sort` function uses. My short research shown that standard sorting algorithm is quite efficient, but is different among different browsers: some implement _Merge sort_, some implement
+_Quicksort_ ("Tony Hoare's sort"), it's often to analyze input sequences before create a decision what algorithm should be appropriate in particular case (adaptive approach).
+
+After this I had one question -- is it possible to sort more quickly? Even if we are talking about a subset of all possible input sequences.
+
+Then I made the assumption that _Counting sort_ could be such an algorithm. And, it seems, it's true, at least at current time. See implementation and evaluation statistics:
 
 ```js
 // preset
@@ -60,4 +68,7 @@ console.log('Program ends.');
 
 #### Results
 
-
+| BROWSER                 | TIME      |
+|-------------------------|-----------|
+| Chromium (83.0.4103.61) |           |
+| Firefox (76.0.1 64-bit) |           |
