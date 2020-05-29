@@ -81,7 +81,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </head>
 <body>
 <h2 id="native-browser-array.prototype.sort-vs-counting-sort-implementation">Native browser Array.prototype.sort vs Counting sort implementation</h2>
-<h3 id="section">[2020-05-07]</h3>
+<h4 id="section">[2020-05-07]</h4>
 <p>History begins when I was interest which algorithm the native browser <code>sort</code> function uses. My short research shown that standard sorting algorithm is quite efficient, but is different among different browsers: some implement <em>Merge sort</em>, some implement <em>Quicksort</em> (“Tony Hoare’s sort”), it’s often to analyze input sequences before create a decision what algorithm should be appropriate in particular case (adaptive approach).</p>
 <p>After this I had one question – is it possible to sort more quickly? Even if we are talking about a subset of all possible input sequences.</p>
 <p>Then I made the assumption that <em>Counting sort</em> could be such an algorithm. And, it seems, it’s true, at least at current time. See implementation and evaluation statistics:</p>
@@ -94,52 +94,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb1-7" title="7"></a>
 <a class="sourceLine" id="cb1-8" title="8"><span class="kw">const</span> vector <span class="op">=</span> []<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-9" title="9"></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="kw">let</span> _vector<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="kw">let</span> start<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-12" title="12"></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Program starts.&#39;</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-14" title="14"></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> COUNT<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) <span class="va">vector</span>.<span class="at">push</span>(<span class="at">emitRandom</span>())<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-16" title="16">_vector <span class="op">=</span> [...<span class="at">vector</span>]<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-17" title="17"></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="va">console</span>.<span class="at">log</span>(<span class="vs">`Array of </span><span class="sc">${</span>COUNT<span class="sc">}</span><span class="vs"> random integers is generated.`</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-19" title="19"></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="co">/**** native Array.prototype.sort ****/</span></a>
-<a class="sourceLine" id="cb1-21" title="21"></a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Test native browser realization of Array.prototype.sort.&#39;</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-23" title="23"></a>
-<a class="sourceLine" id="cb1-24" title="24">start <span class="op">=</span> <span class="va">Date</span>.<span class="at">now</span>()<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-25" title="25"></a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="va">_vector</span>.<span class="at">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">-</span> b)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-27" title="27"></a>
-<a class="sourceLine" id="cb1-28" title="28"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Time to sort with Array.prototype.sort: &#39;</span><span class="op">,</span> <span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> start)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-29" title="29"></a>
-<a class="sourceLine" id="cb1-30" title="30">_vector <span class="op">=</span> [...<span class="at">vector</span>]<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-31" title="31"></a>
-<a class="sourceLine" id="cb1-32" title="32"><span class="co">/**** Counting sort ****/</span></a>
-<a class="sourceLine" id="cb1-33" title="33"></a>
-<a class="sourceLine" id="cb1-34" title="34"><span class="co">// counting sort (use element &quot;properties&quot;)</span></a>
-<a class="sourceLine" id="cb1-35" title="35"><span class="co">// each element is in range 0..1000 inclusively</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">let</span> vector1<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">let</span> vector2<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="kw">let</span> start<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Program starts.&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-15" title="15"></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co">// fill array with pseudo-random numbers, it&#39;s enough for current purpose</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> COUNT<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) <span class="va">vector</span>.<span class="at">push</span>(<span class="at">emitRandom</span>())<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-18" title="18"></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co">// create two clones from original array</span></a>
+<a class="sourceLine" id="cb1-20" title="20">vector1 <span class="op">=</span> [...<span class="at">vector</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-21" title="21">vector2 <span class="op">=</span> [...<span class="at">vector</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-22" title="22"></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="va">console</span>.<span class="at">log</span>(<span class="vs">`Array of </span><span class="sc">${</span>COUNT<span class="sc">}</span><span class="vs"> random integers is generated.`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-24" title="24"></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">/**** native Array.prototype.sort ****/</span></a>
+<a class="sourceLine" id="cb1-26" title="26"></a>
+<a class="sourceLine" id="cb1-27" title="27"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Test native browser realization of Array.prototype.sort.&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-28" title="28"></a>
+<a class="sourceLine" id="cb1-29" title="29">start <span class="op">=</span> <span class="va">Date</span>.<span class="at">now</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-30" title="30"></a>
+<a class="sourceLine" id="cb1-31" title="31"><span class="va">vector1</span>.<span class="at">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">-</span> b)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-32" title="32"></a>
+<a class="sourceLine" id="cb1-33" title="33"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Time to sort with Array.prototype.sort: &#39;</span><span class="op">,</span> <span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> start)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-34" title="34"></a>
+<a class="sourceLine" id="cb1-35" title="35"><span class="co">/**** Counting sort ****/</span></a>
 <a class="sourceLine" id="cb1-36" title="36"></a>
 <a class="sourceLine" id="cb1-37" title="37">start <span class="op">=</span> <span class="va">Date</span>.<span class="at">now</span>()<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-38" title="38"></a>
-<a class="sourceLine" id="cb1-39" title="39"><span class="kw">const</span> tmpVector <span class="op">=</span> <span class="at">Array</span>(COUNT).<span class="at">fill</span>(<span class="dv">0</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-39" title="39"><span class="kw">const</span> tmpVector <span class="op">=</span> <span class="at">Array</span>(BOUND_UPPER <span class="op">+</span> <span class="dv">1</span>).<span class="at">fill</span>(<span class="dv">0</span>)<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-40" title="40"></a>
-<a class="sourceLine" id="cb1-41" title="41"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> COUNT<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) tmpVector[_vector[index]] <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-41" title="41"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> COUNT<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) tmpVector[vector2[index]] <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb1-42" title="42"></a>
 <a class="sourceLine" id="cb1-43" title="43"><span class="kw">let</span> _index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb1-44" title="44"></a>
-<a class="sourceLine" id="cb1-45" title="45"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> COUNT<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-45" title="45"><span class="cf">for</span> ( <span class="kw">let</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;=</span> BOUND_UPPER<span class="op">;</span> index <span class="op">+=</span> <span class="dv">1</span> ) <span class="op">{</span></a>
 <a class="sourceLine" id="cb1-46" title="46">    <span class="cf">for</span> ( <span class="kw">let</span> subIndex <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> subIndex <span class="op">&lt;</span> tmpVector[index]<span class="op">;</span> subIndex <span class="op">+=</span> <span class="dv">1</span> ) <span class="op">{</span></a>
-<a class="sourceLine" id="cb1-47" title="47">        _vector[_index] <span class="op">=</span> index<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-47" title="47">        vector2[_index] <span class="op">=</span> index<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-48" title="48">        _index <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></a>
 <a class="sourceLine" id="cb1-49" title="49">    <span class="op">}</span></a>
 <a class="sourceLine" id="cb1-50" title="50"><span class="op">}</span></a>
 <a class="sourceLine" id="cb1-51" title="51"></a>
 <a class="sourceLine" id="cb1-52" title="52"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Time to sort with Counting sort: &#39;</span><span class="op">,</span> <span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> start)<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-53" title="53"></a>
-<a class="sourceLine" id="cb1-54" title="54"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Program ends.&#39;</span>)<span class="op">;</span></a></code></pre></div>
-<h4 id="results">Results</h4>
+<a class="sourceLine" id="cb1-54" title="54"><span class="co">// ensure vector1 and vector2 are identical</span></a>
+<a class="sourceLine" id="cb1-55" title="55"><span class="va">console</span>.<span class="at">assert</span>(<span class="va">JSON</span>.<span class="at">stringify</span>(vector1) <span class="op">===</span> <span class="va">JSON</span>.<span class="at">stringify</span>(vector2)<span class="op">,</span> <span class="st">&#39;Two sorted arrays has different elements order!&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-56" title="56"><span class="co">//console.log(vector1.length === vector2.length &amp;&amp; vector1.every((item, index) =&gt; item === vector2[index]));</span></a>
+<a class="sourceLine" id="cb1-57" title="57"></a>
+<a class="sourceLine" id="cb1-58" title="58"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Program ends.&#39;</span>)<span class="op">;</span></a></code></pre></div>
+<h3 id="results">Results</h3>
 <table>
 <thead>
 <tr class="header">
@@ -156,9 +160,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>Firefox (76.0.1 64-bit)</td>
 <td></td>
 </tr>
+<tr class="odd">
+<td>*Node.js (12.17.0)</td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css"> <link class="codestyle" rel="stylesheet" href="assets/theme-railscasts.css">
+<ul>
+<li>use <code>1e9</code> instead of <code>1e6</code> of array elements, run as <code>node --max-old-space-size=4096 [file]</code> to prevent “out of memory” error</li>
+</ul>
+<h3 id="theory">Theory</h3>
+<p><em>Counting sort</em> is the special sorting algorithm with linear time complexity <strong>O(N)</strong>. It means that there are some requirements for sequence that is being sorted. In other words the algorithm is not indifferent to the input sequence. The core idea is to <em>count</em> of repetitions of each element in a sequence and use this information to get the final sorted array.</p>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css"> <link class="codestyle" rel="stylesheet" href="assets/theme-pojoaque.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
 <script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/go.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
