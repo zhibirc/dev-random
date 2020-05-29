@@ -19,13 +19,18 @@ const emitRandom = () => (BOUND_LOWER + Math.random() * (BOUND_UPPER - BOUND_LOW
 
 const vector = [];
 
-let _vector;
+let vector1;
+let vector2;
 let start;
 
 console.log('Program starts.');
 
+// fill array with pseudo-random numbers, it's enough for current purpose
 for ( let index = 0; index < COUNT; index += 1 ) vector.push(emitRandom());
-_vector = [...vector];
+
+// create two clones from original array
+vector1 = [...vector];
+vector2 = [...vector];
 
 console.log(`Array of ${COUNT} random integers is generated.`);
 
@@ -35,33 +40,32 @@ console.log('Test native browser realization of Array.prototype.sort.');
 
 start = Date.now();
 
-_vector.sort((a, b) => a - b);
+vector1.sort((a, b) => a - b);
 
 console.log('Time to sort with Array.prototype.sort: ', Date.now() - start);
 
-_vector = [...vector];
-
 /**** Counting sort ****/
-
-// counting sort (use element "properties")
-// each element is in range 0..1000 inclusively
 
 start = Date.now();
 
-const tmpVector = Array(COUNT).fill(0);
+const tmpVector = Array(BOUND_UPPER + 1).fill(0);
 
-for ( let index = 0; index < COUNT; index += 1 ) tmpVector[_vector[index]] += 1;
+for ( let index = 0; index < COUNT; index += 1 ) tmpVector[vector2[index]] += 1;
 
 let _index = 0;
 
-for ( let index = 0; index < COUNT; index += 1 ) {
+for ( let index = 0; index <= BOUND_UPPER; index += 1 ) {
     for ( let subIndex = 0; subIndex < tmpVector[index]; subIndex += 1 ) {
-        _vector[_index] = index;
+        vector2[_index] = index;
         _index += 1;
     }
 }
 
 console.log('Time to sort with Counting sort: ', Date.now() - start);
+
+// ensure vector1 and vector2 are identical
+console.assert(JSON.stringify(vector1) === JSON.stringify(vector2), 'Two sorted arrays has different elements order!');
+//console.log(vector1.length === vector2.length && vector1.every((item, index) => item === vector2[index]));
 
 console.log('Program ends.');
 ```
@@ -72,3 +76,6 @@ console.log('Program ends.');
 |-------------------------|-----------|
 | Chromium (83.0.4103.61) |           |
 | Firefox (76.0.1 64-bit) |           |
+| *Node.js (12.17.0)      |           |
+
+* use `1e9` instead of `1e6` of array elements, run as `node --max-old-space-size=4096 [file]` to prevent "out of memory" error
