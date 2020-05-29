@@ -1,6 +1,6 @@
 ## Native browser Array.prototype.sort vs Counting sort implementation
 
-### [2020-05-07]
+#### [2020-05-07]
 
 History begins when I was interest which algorithm the native browser `sort` function uses. My short research shown that standard sorting algorithm is quite efficient, but is different among different browsers: some implement _Merge sort_, some implement
 _Quicksort_ ("Tony Hoare's sort"), it's often to analyze input sequences before create a decision what algorithm should be appropriate in particular case (adaptive approach).
@@ -70,7 +70,7 @@ console.assert(JSON.stringify(vector1) === JSON.stringify(vector2), 'Two sorted 
 console.log('Program ends.');
 ```
 
-#### Results
+### Results
 
 | BROWSER                 | TIME      |
 |-------------------------|-----------|
@@ -79,3 +79,9 @@ console.log('Program ends.');
 | *Node.js (12.17.0)      |           |
 
 * use `1e9` instead of `1e6` of array elements, run as `node --max-old-space-size=4096 [file]` to prevent "out of memory" error
+
+### Theory
+
+_Counting sort_ is the special sorting algorithm with linear time complexity **O(N)**. It means that there are some requirements for sequence that is being sorted.
+In other words the algorithm is not indifferent to the input sequence. The core idea is to _count_ of repetitions of each element in a sequence and use this information
+to get the final sorted array.
