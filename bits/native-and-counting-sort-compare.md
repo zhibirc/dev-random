@@ -76,10 +76,10 @@ console.log('Program ends.');
 
 ### Results
 
-You may be surprised :astonished:
+You may be surprised 😲
 
 |              ENVIRONMENT              | TIME(ms) for `Array.prototype.sort` | TIME(ms) for Counting Sort |
-|---------------------------------------|-------------------------------------|----------------------------|
+|---------------------------------------|                :---:                |            :---:           |
 | **Chromium** `88.0.4324.150 (64-bit)` |                 415                 |              26            |
 | **Firefox** `85.0.1 (64-bit)`         |                 116                 |             812            |
 | **Node.js** `12.20.1`*                |                 294                 |               7            |
