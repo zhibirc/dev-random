@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Pandoc Build
-        uses: maxheld83/pandoc-action@v2
+        uses: docker://pandoc/latex:latest
         with:
           args: --standalone --output=index.html bits/native-and-counting-sort-compare.md assets/footer.html --css assets/main.css
 
