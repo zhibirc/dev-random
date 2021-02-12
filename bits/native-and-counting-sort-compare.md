@@ -78,11 +78,11 @@ console.log('Program ends.');
 
 You may be surprised :astonished:
 
-|              ENVIRONMENT              | TIME(ms) for `Array.prototype.sort` |   TIME(ms) for Counting Sort   |
-|---------------------------------------|-------------------------------------|--------------------------------|
-| **Chromium** `88.0.4324.150 (64-bit)` | <b style="color: #f00">415</b>      | <b style="color: #ff0">26</b>  |
-| **Firefox** `85.0.1 (64-bit)`         | <b style="color: #0f0">116</b>      | <b style="color: #f00">812</b> |
-| **Node.js** `12.20.1`*                | <b style="color: #ff0">294</b>      | <b style="color: #0f0">7</b>   |
+|              ENVIRONMENT              | TIME(ms) for `Array.prototype.sort` |   TIME(ms) for Counting Sort    |
+|---------------------------------------|-------------------------------------|---------------------------------|
+| **Chromium** `88.0.4324.150 (64-bit)` | <b style="color: red">415</b>       | <b style="color: yellow">26</b> |
+| **Firefox** `85.0.1 (64-bit)`         | <b style="color: green">116</b>     | <b style="color: red">812</b>   |
+| **Node.js** `12.20.1`*                | <b style="color: yellow">294</b>    | <b style="color: green">7</b>   |
 
 * possibly run as `node --max-old-space-size=4096 [file]` to prevent "out of memory" error
 
@@ -94,7 +94,7 @@ to get the final sorted array. It's important to note that this sorting _it is n
 
 ### Useful links
 
-[ECMA-262 Standard](https://tc39.es/ecma262/#sec-array.prototype.sort)
-[Counting Sort on Wikipedia](https://en.wikipedia.org/wiki/Counting_sort)
-[Counting Sort Visualization](https://www.cs.usfca.edu/~galles/visualization/CountingSort.html)
-[Counting Sort practicing](https://www.hackerearth.com/practice/algorithms/sorting/counting-sort/tutorial/)
+- [ECMA-262 Standard](https://tc39.es/ecma262/#sec-array.prototype.sort)
+- [Counting Sort on Wikipedia](https://en.wikipedia.org/wiki/Counting_sort)
+- [Counting Sort Visualization](https://www.cs.usfca.edu/~galles/visualization/CountingSort.html)
+- [Counting Sort practicing](https://www.hackerearth.com/practice/algorithms/sorting/counting-sort/tutorial/)
