@@ -74,6 +74,7 @@ console.log(`Are both sorts produce the identical result? - ${['No', 'Yes'][Numb
 console.log('Program ends.');
 ```
 
+
 ### Results
 
 You may be surprised 😲
@@ -86,11 +87,13 @@ You may be surprised 😲
 
 * possibly run as `node --max-old-space-size=4096 [file]` to prevent "out of memory" error
 
+
 ### Theory
 
 _Counting sort_ is the special sorting algorithm with linear time complexity `O(N)`. It means that there are some requirements for sequence that is being sorted.
 In other words the algorithm is not indifferent to the input sequence. The core idea is to _count_ of repetitions of each element in a sequence and use this information
-to get the final sorted array. It's important to note that this sorting _it is not a comparison sort_, so doesn't limited
+to get the final sorted array. It's important to note that this sorting _it is not a comparison sort_, so it isn't limited to `O(N log N)` complexity from below.
+
 
 ### Useful links
 
